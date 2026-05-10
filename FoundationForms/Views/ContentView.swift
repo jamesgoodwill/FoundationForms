@@ -18,6 +18,13 @@ struct ContentView: View {
                         Label("Chat", systemImage: "bubble.left.and.bubble.right")
                     }
                 }
+                Section("Forms") {
+                    NavigationLink {
+                        PatientIntakeView()
+                    } label: {
+                        Label("Patient Intake", systemImage: "list.bullet.clipboard")
+                    }
+                }
             }
             .navigationTitle("FoundationForms")
         }

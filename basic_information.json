@@ -1,0 +1,90 @@
+{
+  "rows": [
+    {
+      "fields": [
+        {
+          "id": "patient.firstName",
+          "type": "text",
+          "title": "First Name",
+          "maxCharacters": 50,
+          "isRequired": true
+        },
+        {
+          "id": "patient.lastName",
+          "type": "text",
+          "title": "Last Name",
+          "maxCharacters": 60,
+          "isRequired": true
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "id": "patient.dob",
+          "type": "date",
+          "style": "date",
+          "title": "Date of Birth",
+          "isRequired": true
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "id": "patient.address",
+          "type": "address",
+          "title": "Address",
+          "subFields": [
+            {
+              "id": "patient.address.street",
+              "type": "text",
+              "title": "Street Address",
+              "maxCharacters": 255,
+              "isRequired": true
+            },
+            {
+              "id": "patient.address.city",
+              "type": "text",
+              "title": "City",
+              "maxCharacters": 100,
+              "isRequired": true
+            },
+            {
+              "id": "patient.address.state",
+              "key": "us_state_codes",
+              "role": "state",
+              "type": "singleSelect",
+              "title": "State",
+              "isRequired": true
+            },
+            {
+              "id": "patient.address.zip",
+              "role": "zip",
+              "type": "text",
+              "title": "ZIP Code",
+              "maxCharacters": 10,
+              "isRequired": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "id": "patient.symptoms",
+          "type": "textarea",
+          "title": "Symptoms",
+          "maxCharacters": 2000,
+          "isRequired": true
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "id": "patient_intake",
+    "title": "Patient Intake",
+    "card_type": "basic"
+  }
+}

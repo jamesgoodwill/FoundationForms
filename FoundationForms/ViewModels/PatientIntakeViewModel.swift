@@ -10,6 +10,11 @@ final class PatientIntakeViewModel {
     var lastError: String?
     let availability: SystemLanguageModel.Availability
 
+    // Bumped by `reset()`; the view binds `.id(resetCount)` on the chat shell
+    // so the embedded `SpeechCaptureController` gets a fresh `@State` instance
+    // on every reset (this is how we stop in-flight recording from outside).
+    var resetCount: Int = 0
+
     private var session: LanguageModelSession?
 
     init(
@@ -28,6 +33,18 @@ final class PatientIntakeViewModel {
     /// the user finishes typing. See FOUNDATION_MODELS_OPTIMIZATION.md.
     func prewarm() {
         session?.prewarm()
+    }
+
+    /// Wipe form, transcript, and draft back to the initial "new patient" state.
+    /// Bumps `resetCount` so the chat shell — and the speech controller it owns —
+    /// gets recreated.
+    func reset() {
+        form = PatientIntakeForm()
+        messages = [Self.greeting]
+        draft = ""
+        lastError = nil
+        isWorking = false
+        resetCount += 1
     }
 
     /// Process the drafted message: extract structured fields, merge into

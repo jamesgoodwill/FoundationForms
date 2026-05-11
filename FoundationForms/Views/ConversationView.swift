@@ -11,6 +11,8 @@ struct ConversationView: View {
     let unavailableTitle: String
     let onSend: () -> Void
 
+    @State private var speech = SpeechCaptureController()
+
     var body: some View {
         switch availability {
         case .available:
@@ -40,24 +42,54 @@ struct ConversationView: View {
 
             inputRow
         }
+        .task { speech.prewarm() }
+        .onChange(of: speech.partialTranscript) { _, newValue in
+            if speech.isRecording { draft = newValue }
+        }
     }
 
     private var inputRow: some View {
-        HStack(alignment: .bottom, spacing: 8) {
-            TextField(inputPlaceholder, text: $draft, axis: .vertical)
-                .lineLimit(1...5)
-                .textFieldStyle(.roundedBorder)
+        VStack(spacing: 4) {
+            HStack(alignment: .bottom, spacing: 8) {
+                TextField(inputPlaceholder, text: $draft, axis: .vertical)
+                    .lineLimit(1...5)
+                    .textFieldStyle(.roundedBorder)
 
-            Button {
-                onSend()
-            } label: {
-                Image(systemName: "arrow.up.circle.fill")
-                    .font(.system(size: 30))
+                if !speech.availability.isUnavailable {
+                    Button {
+                        if speech.isRecording {
+                            speech.stop()
+                        } else {
+                            Task { await speech.start() }
+                        }
+                    } label: {
+                        Image(systemName: speech.isRecording ? "stop.circle.fill" : "mic.circle.fill")
+                            .font(.system(size: 30))
+                            .foregroundStyle(speech.isRecording ? Color.red : Color.accentColor)
+                            .symbolEffect(.pulse, isActive: speech.isRecording)
+                    }
+                    .accessibilityLabel(speech.isRecording ? "Stop dictation" : "Start dictation")
+                }
+
+                Button {
+                    onSend()
+                } label: {
+                    Image(systemName: "arrow.up.circle.fill")
+                        .font(.system(size: 30))
+                }
+                .disabled(
+                    isWorking
+                    || speech.isRecording
+                    || draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                )
             }
-            .disabled(
-                isWorking
-                || draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            )
+
+            if let err = speech.lastError {
+                Text(err)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)

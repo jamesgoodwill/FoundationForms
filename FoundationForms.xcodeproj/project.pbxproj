@@ -256,6 +256,8 @@
 				DEVELOPMENT_TEAM = DT9PE58AY2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "FoundationForms uses the microphone to transcribe what you say into form fields.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "FoundationForms uses on-device speech recognition to convert your voice into text.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +290,8 @@
 				DEVELOPMENT_TEAM = DT9PE58AY2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "FoundationForms uses the microphone to transcribe what you say into form fields.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "FoundationForms uses on-device speech recognition to convert your voice into text.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

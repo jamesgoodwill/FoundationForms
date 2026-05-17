@@ -30,6 +30,15 @@ struct PatientIntakeView: View {
         .navigationTitle("Patient Intake")
         .navigationBarTitleDisplayMode(.inline)
         .task { viewModel.prewarm() }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.reset()
+                } label: {
+                    Label("New Patient", systemImage: "person.badge.plus")
+                }
+            }
+        }
     }
 
     private var conversation: some View {
@@ -42,6 +51,7 @@ struct PatientIntakeView: View {
             unavailableTitle: "Intake is unavailable",
             onSend: { Task { await viewModel.send() } }
         )
+        .id(viewModel.resetCount)
     }
 
     private var formSidebar: some View {

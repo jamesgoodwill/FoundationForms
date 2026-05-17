@@ -4,10 +4,12 @@ import FoundationModels
 // LLM-facing mirror of `PatientIntakeForm`. `Date` and other rich types aren't
 // supported by `@Generable` directly, so dates round-trip through ISO 8601 strings
 // and we fold the result back into the domain model via `init(merging:into:)`.
+let test = "Patient's legal first name. Maximum 50 characters."
+
 @Generable
 struct PatientIntakeFormExtraction: Sendable {
 
-    @Guide(description: "Patient's legal first name. Maximum 50 characters.")
+    @Guide(description: test)
     var firstName: String?
 
     @Guide(description: "Patient's legal last name. Maximum 60 characters.")

@@ -4,7 +4,7 @@ import FoundationModels
 @Observable
 final class PatientIntakeViewModel {
     var form: PatientIntakeForm
-    var messages: [ChatMessage]
+    var messages: [ConversationMessage]
     var draft: String = ""
     var isWorking: Bool = false
     var lastError: String?
@@ -19,7 +19,7 @@ final class PatientIntakeViewModel {
 
     init(
         seed: PatientIntakeForm = .init(),
-        seedMessages: [ChatMessage]? = nil
+        seedMessages: [ConversationMessage]? = nil
     ) {
         self.form = seed
         self.messages = seedMessages ?? [Self.greeting]
@@ -54,9 +54,9 @@ final class PatientIntakeViewModel {
         guard !text.isEmpty, case .available = availability else { return }
 
         draft = ""
-        messages.append(ChatMessage(content: text, isUser: true))
+        messages.append(ConversationMessage(content: text, isUser: true))
 
-        let placeholder = ChatMessage(content: "", isUser: false)
+        let placeholder = ConversationMessage(content: "", isUser: false)
         let placeholderID = placeholder.id
         messages.append(placeholder)
 
@@ -93,7 +93,7 @@ final class PatientIntakeViewModel {
         messages[idx].content = content
     }
 
-    private static let greeting = ChatMessage(
+    private static let greeting = ConversationMessage(
         content: "Hi! Tell me about the patient — name, date of birth, address, and what they're experiencing.",
         isUser: false
     )

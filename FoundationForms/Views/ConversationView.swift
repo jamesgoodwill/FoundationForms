@@ -3,7 +3,7 @@ import FoundationModels
 import UIKit
 
 struct ConversationView: View {
-    let messages: [ChatMessage]
+    let messages: [ConversationMessage]
     @Binding var draft: String
     let isWorking: Bool
     let availability: SystemLanguageModel.Availability
@@ -98,7 +98,7 @@ struct ConversationView: View {
 }
 
 private struct MessageBubble: View {
-    let message: ChatMessage
+    let message: ConversationMessage
 
     var body: some View {
         HStack {
